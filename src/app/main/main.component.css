@@ -1,0 +1,110 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+.main-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/virus.jpg');
+    background-size: cover;
+    filter: blur(0px);
+    animation: vibrate 1s infinite, blurEffect 2s infinite alternate;
+}
+
+@keyframes vibrate {
+
+    0%,
+    100% {
+        transform: translate(0);
+    }
+
+    25% {
+        transform: translate(-1px, -1px);
+    }
+
+    50% {
+        transform: translate(1px, 1px);
+    }
+
+    75% {
+        transform: translate(-1px, 1px);
+    }
+}
+
+@keyframes blurEffect {
+    0% {
+        filter: blur(0px);
+    }
+
+    100% {
+        filter: blur(3px);
+    }
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #32CD32;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.titleText {
+    background-image: url(../../assets/titleText.gif)
+}
+
+@keyframes distortion-animation {
+    0% {
+        transform: scale(1.02) translate(-2%, -2%);
+        filter: blur(3px) hue-rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.05) translate(2%, 2%);
+        filter: blur(5px) hue-rotate(180deg);
+    }
+
+    100% {
+        transform: scale(1.02) translate(-2%, -2%);
+        filter: blur(3px) hue-rotate(360deg);
+    }
+}

@@ -1,0 +1,21 @@
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+    max-width: 90%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+mat-form-field {
+    width: 100%;
+    /* Asegúrate de que los campos ocupen todo el ancho */
+    margin-bottom: 16px;
+    /* Espaciado entre los campos */
+}

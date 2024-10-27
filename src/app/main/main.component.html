@@ -1,0 +1,14 @@
+<div class="main-container">
+    <div class="background"></div>
+    <div class="content">
+        <img src="../../assets/titleText.gif" alt="">aaa <!--Ni idea de por que no se vé el titulo-->
+        <button mat-button routerLink="/login" (click)="goToLogin()">Login</button>
+    </div>
+</div>
+
+<svg style="display: none;">
+    <filter id="distortion">
+        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" result="warp" />
+        <feDisplacementMap in="SourceGraphic" in2="warp" scale="40" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+</svg>
