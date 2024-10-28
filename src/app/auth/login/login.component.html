@@ -1,19 +1,20 @@
 <mat-card class="card">
-    <img src="../../../assets/titleText.gif" alt="">
-    <mat-card-title>Iniciar Sesión</mat-card-title>
+    <img src="imgs/titleText.gif" alt="Título">
+    <!--<mat-card-title>Juja Sesión</mat-card-title>-->
     <mat-card-content>
-        <form>
+        <p>
             <mat-form-field appearance="fill">
-                <mat-label>Nombre de Usuario</mat-label>
+                Nombre de usuario: <mat-label>Nombre de Usuario</mat-label>
                 <input matInput placeholder="Ej: juan123" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>Contraseña</mat-label>
                 <input matInput type="password" placeholder="********" required>
+                <mat-hint>Pista</mat-hint>
             </mat-form-field>
 
             <button mat-raised-button color="primary" type="submit">Iniciar Sesión</button>
-        </form>
+        </p>
     </mat-card-content>
 </mat-card>

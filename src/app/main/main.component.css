@@ -88,10 +88,6 @@ button:hover {
     transform: scale(1.1);
 }
 
-.titleText {
-    background-image: url(../../assets/titleText.gif)
-}
-
 @keyframes distortion-animation {
     0% {
         transform: scale(1.02) translate(-2%, -2%);
