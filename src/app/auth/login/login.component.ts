@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormField } from '@angular/material/form-field';
 import { MatLabel } from '@angular/material/form-field';
 import { MatHint } from '@angular/material/form-field';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,4 +15,9 @@ import { MatHint } from '@angular/material/form-field';
 })
 export class LoginComponent {
 
+  constructor(private router: Router) { }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
 }
