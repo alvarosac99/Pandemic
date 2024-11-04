@@ -13,6 +13,6 @@ export class MainComponent {
   constructor(private router: Router) { }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 }
