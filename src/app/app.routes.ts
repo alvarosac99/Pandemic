@@ -6,10 +6,9 @@ import { RegisterComponent } from './auth/register/register.component';
 
 export const routes: Routes = [
     { path: '', component: MainComponent }, // Ruta para la pagina principal
-    { path: 'login', component: LoginComponent }, //Ruta para el login
-    { path: 'register', component: RegisterComponent }, //Ruta para el register
-    { path: 'perfil', loadChildren: () => import('./perfil/perfil.module').then(m => m.PerfilModule)},
-    { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)}
+    { path: 'perfil', loadChildren: () => import('./perfil/perfil.module').then(m => m.PerfilModule)}, //Ruta para el perfil
+    { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)}, //Ruta para el login o register
+    { path: 'menu', loadChildren: () => import('./menu/menu.module').then(m => m.MenuModule)} //Ruta para el menú
     //{ path: '**', component: NotFoundComponent } // Ruta 404
 ];
 

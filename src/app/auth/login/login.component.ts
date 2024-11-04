@@ -18,7 +18,7 @@ export class LoginComponent {
 
   constructor(private router: Router) { }
 
-  goToRegister() {
-    this.router.navigate(['/register']);
+  goToMenu() {
+    this.router.navigate(['/menu']);
   }
 }
