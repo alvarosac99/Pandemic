@@ -20,7 +20,7 @@ export class RegisterComponent {
 
   passwordMismatch: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   onSubmit(form: NgForm) {
     if (form.valid) {
@@ -33,9 +33,10 @@ export class RegisterComponent {
       } else {
         this.passwordMismatch = false; // Resetea el error si coinciden
       }
-      
+
       console.log('Registro exitoso', form.value);
       form.reset();
+      this.router.navigate(['/auth/login'])
     } else {
       console.log('Formulario inválido');
     }
