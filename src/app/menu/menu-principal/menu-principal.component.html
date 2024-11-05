@@ -1,26 +1,26 @@
 <div id="cajita">
     <img src="imgs/titleText.gif" alt="Título" draggable="false">
-    <button mat-fab extended>
+    <button mat-fab extended (click)="goToNueva()">
         <mat-icon>autorenew</mat-icon>
         Nueva partida
     </button>
-    <button mat-fab extended>
+    <button mat-fab extended (click)="goToCargar()">
         <mat-icon>arrow_forward</mat-icon>
         Cargar partida
     </button>
-    <button mat-fab extended>
+    <button mat-fab extended (click)="goToInformacion()">
         <mat-icon>info</mat-icon>
         Información
     </button>
-    <button mat-fab extended>
+    <button mat-fab extended (click)="goToRanking()">
         <mat-icon>format_list_numbered</mat-icon>
         Ranking
     </button>
-    <button mat-fab extended>
+    <button mat-fab extended (click)="goToAutores()">
         <mat-icon>group</mat-icon>
         Autores
     </button>
-    <button mat-fab extended>
+    <button mat-fab extended (click)="goToVersion()">
         <mat-icon>settings</mat-icon>
         Versión
     </button>
