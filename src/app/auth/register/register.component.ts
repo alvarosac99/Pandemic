@@ -1,22 +1,43 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule, MatLabel, MatHint } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatLabel, MatHint, MatButtonModule],
+  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private router: Router) { }
 
-  goToLogin() {
-    this.router.navigate(['/auth/login']);
+
+  passwordMismatch: boolean = false;
+
+  constructor(private router: Router) {}
+
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      const password = form.value['password'];
+      const confirmPassword = form.value['confirmPassword'];
+
+      if (password !== confirmPassword) {
+        this.passwordMismatch = true;
+        return; // No continuar si las contraseñas no coinciden
+      } else {
+        this.passwordMismatch = false; // Resetea el error si coinciden
+      }
+      
+      console.log('Registro exitoso', form.value);
+      form.reset();
+    } else {
+      console.log('Formulario inválido');
+    }
   }
 }
