@@ -1,5 +1,6 @@
-<mat-card class="card">
-    <mat-card-title>Registrarse</mat-card-title>
+<mat-card class="card" @fadeIn>
+    <img src="/imgs/titleText.gif" alt="">
+    <mat-card-title>Crear cuenta</mat-card-title>
     <mat-card-content>
         <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
 
@@ -42,7 +43,8 @@
                     *ngIf="registerForm.controls['confirmPassword']?.invalid && (registerForm.controls['confirmPassword']?.touched || registerForm.controls['confirmPassword']?.dirty)">
                     <span *ngIf="registerForm.controls['confirmPassword']?.errors?.['required']">Este campo es
                         obligatorio.</span>
-                    <span *ngIf="passwordMismatch">Las contraseñas no coinciden.</span> <!--ETO NO SIRVE-->
+                    <span *ngIf="passwordMismatch">Las contraseñas no coinciden.</span>
+                    <!--ETO NO SIRVE, todavia no entiendo por qué :C-->
                 </mat-error>
             </mat-form-field>
 
@@ -52,3 +54,15 @@
     </mat-card-content>
     <p>¿Tienes una cuenta? <a href="/auth/login">Inicia sesión</a></p>
 </mat-card>
+
+<!--
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////                         :(                        /////////////////////////////////////
+    /////////////////////////////////////                       Queso                       /////////////////////////////////////                                                                    //////////////////////////////////
+    /////////////////////////////////////                         :)                        /////////////////////////////////////                      
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+-->

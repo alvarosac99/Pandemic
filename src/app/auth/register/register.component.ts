@@ -7,13 +7,25 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-out', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class RegisterComponent {
 
@@ -33,7 +45,7 @@ export class RegisterComponent {
       } else {
         this.passwordMismatch = false; // Resetea el error si coinciden
       }
-
+      //A partir de aqui: Todo lo que sucede tras un registro exitoso :)
       console.log('Registro exitoso', form.value);
       form.reset();
       this.router.navigate(['/auth/login'])

@@ -3,4 +3,17 @@
     justify-content: center;
     align-items: center;
     height: 70vh;
+
+    /*ANIMACIÓN TO GUAPA POR DEFECTO*/
+    background: repeating-linear-gradient(135deg,
+            #162A09,
+            #162A09 20%,
+            #4c881c 20%,
+            #589B1B 50%);
+    background-size: 100px 100px;
+    animation: move-it 2s linear infinite;
+
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
