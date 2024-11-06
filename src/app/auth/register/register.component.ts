@@ -35,22 +35,40 @@ export class RegisterComponent {
   constructor(private router: Router) { }
 
   onSubmit(form: NgForm) {
+
+    //this.marcarTodosLosCampos(form);  PROBABLEMENTE NO SIRVA PARA NADA PERO POR PROBAR...
+
     if (form.valid) {
       const password = form.value['password'];
       const confirmPassword = form.value['confirmPassword'];
 
       if (password !== confirmPassword) {
         this.passwordMismatch = true;
+
+        form.controls['confirmPassword']?.markAsTouched();   //Marca la casilla de Confirmar contraseña como touched
+        console.log('Las contraseñas no coinciden');
+
         return; // No continuar si las contraseñas no coinciden
       } else {
         this.passwordMismatch = false; // Resetea el error si coinciden
+
+        //A partir de aqui: Todo lo que sucede tras un registro exitoso :)
+        console.log('Registro exitoso', form.value);
+        form.reset();
+        this.router.navigate(['/auth/login'])
       }
-      //A partir de aqui: Todo lo que sucede tras un registro exitoso :)
-      console.log('Registro exitoso', form.value);
-      form.reset();
-      this.router.navigate(['/auth/login'])
     } else {
       console.log('Formulario inválido');
     }
+
+
+
+  }
+
+  // Marca todos los controles como touched
+  private marcarTodosLosCampos(form: NgForm) {
+    Object.values(form.controls).forEach(control => {
+      control.markAsTouched();
+    });
   }
 }

@@ -2,53 +2,74 @@
     <img src="/imgs/titleText.gif" alt="">
     <mat-card-title>Crear cuenta</mat-card-title>
     <mat-card-content>
-        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+
+            <!--
+            /////////////////////////////////////////////////////////
+            ///////////////////       email       ///////////////////
+            /////////////////////////////////////////////////////////
+            -->
 
             <mat-form-field appearance="fill">
                 <mat-label>Dirección de correo</mat-label>
-                <input matInput placeholder="Ej: juan123@hotmail.com" required name="email" ngModel email>
-                <mat-error
-                    *ngIf="registerForm.controls['email']?.invalid && (registerForm.controls['email']?.touched || registerForm.controls['email']?.dirty)">
-                    <span *ngIf="registerForm.controls['email']?.errors?.['required']">Este campo es obligatorio.</span>
-                    <span *ngIf="registerForm.controls['email']?.errors?.['email']">Ingrese un correo válido.</span>
+                <input matInput placeholder="Ej: tugatita69@hot.oreja" required name="email" ngModel email>
+                <mat-error *ngIf="form.controls['email']?.invalid || form.controls['email']?.touched">
+                    <span *ngIf="form.controls['email']?.errors?.['required']">Este campo es obligatorio.</span>
+                    <span *ngIf="form.controls['email']?.errors?.['email']">Ingrese un correo válido.</span>
                 </mat-error>
             </mat-form-field>
 
+
+            <!--
+            /////////////////////////////////////////////////////////
+            ///////////////////      usuario      ///////////////////
+            /////////////////////////////////////////////////////////
+            -->
+
             <mat-form-field appearance="fill">
                 <mat-label>Nombre de Usuario</mat-label>
-                <input matInput placeholder="Ej: juan123" required name="username" ngModel minlength=3>
-                <mat-error
-                    *ngIf="registerForm.controls['username']?.invalid && (registerForm.controls['username']?.touched || registerForm.controls['username']?.dirty)">
-                    <span *ngIf="registerForm.controls['username']?.errors?.['required']">Este campo es
+                <input matInput placeholder="Ej: juanxirivella902" required name="username" ngModel minlength=5>
+                <mat-error *ngIf="form.controls['username']?.invalid || form.controls['username']?.dirty">
+                    <span *ngIf="form.controls['username']?.errors?.['required']">Este campo es
                         obligatorio.</span>
-                    <span *ngIf="registerForm.controls['username']?.errors?.['minlength']">Mínimo 3 caracteres.</span>
+                    <span *ngIf="form.controls['username']?.errors?.['minlength']">Mínimo 5 caracteres.</span>
                 </mat-error>
             </mat-form-field>
+
+            <!--
+            //////////////////////////////////////////////////////////
+            ///////////////////     contraseña     ///////////////////
+            //////////////////////////////////////////////////////////
+            -->
 
             <mat-form-field appearance="fill">
                 <mat-label>Contraseña</mat-label>
                 <input matInput type="password" placeholder="********" required name="password" ngModel minlength="6">
-                <mat-error
-                    *ngIf="registerForm.controls['password']?.invalid && (registerForm.controls['password']?.touched || registerForm.controls['password']?.dirty)">
-                    <span *ngIf="registerForm.controls['password']?.errors?.['required']">Este campo es
+                <mat-error *ngIf="form.controls['password']?.invalid || form.controls['password']?.dirty">
+                    <span *ngIf="form.controls['password']?.errors?.['required']">Este campo es
                         obligatorio.</span>
-                    <span *ngIf="registerForm.controls['password']?.errors?.['minlength']">Mínimo 6 caracteres.</span>
+                    <span *ngIf="form.controls['password']?.errors?.['minlength']">Mínimo 6 caracteres.</span>
                 </mat-error>
             </mat-form-field>
+
+            <!--
+            //////////////////////////////////////////////////////////
+            /////////////      Confirmar contraseña      /////////////
+            //////////////////////////////////////////////////////////
+            -->
 
             <mat-form-field appearance="fill">
                 <mat-label>Repetir contraseña</mat-label>
                 <input matInput type="password" placeholder="********" required name="confirmPassword" ngModel>
                 <mat-error
-                    *ngIf="registerForm.controls['confirmPassword']?.invalid && (registerForm.controls['confirmPassword']?.touched || registerForm.controls['confirmPassword']?.dirty)">
-                    <span *ngIf="registerForm.controls['confirmPassword']?.errors?.['required']">Este campo es
+                    *ngIf="form.controls['confirmPassword']?.invalid || form.controls['confirmPassword'].touched">
+                    <span *ngIf="form.controls['confirmPassword']?.errors?.['required']">Este campo es
                         obligatorio.</span>
                     <span *ngIf="passwordMismatch">Las contraseñas no coinciden.</span>
-                    <!--ETO NO SIRVE, todavia no entiendo por qué :C-->
                 </mat-error>
             </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit">Registrarse</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Registrarse</button>
         </form>
 
     </mat-card-content>
