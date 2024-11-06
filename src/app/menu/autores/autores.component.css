@@ -6,11 +6,39 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
-    width: 300px;
+    width: 600px;
     max-width: 90%;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
+}
+
+#titulo {
+    margin-bottom: 20px;
+}
+
+#horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.autor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconoAutor {
+    width: 200px;
+}
+
+.contenedorIcono {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
