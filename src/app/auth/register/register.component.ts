@@ -34,12 +34,16 @@ export class RegisterComponent {
   constructor(private router: Router) { }
 
   onSubmit(form: NgForm) {
+    console.log(this.passwordMismatch);
 
     //this.marcarTodosLosCampos(form);  PROBABLEMENTE NO SIRVA PARA NADA PERO POR PROBAR...
 
     if (form.valid) {
       const password = form.value['password'];
       const confirmPassword = form.value['confirmPassword'];
+
+      console.log(password);
+      console.log(confirmPassword);
 
       if (password !== confirmPassword) {
         this.passwordMismatch = true;
@@ -49,6 +53,8 @@ export class RegisterComponent {
 
         return; // No continuar si las contraseñas no coinciden
       } else {
+        //console.log("muymal");
+
         this.passwordMismatch = false; // Resetea el error si coinciden
 
         //A partir de aqui: Todo lo que sucede tras un registro exitoso :)

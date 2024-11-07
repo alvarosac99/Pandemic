@@ -13,7 +13,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Dirección de correo</mat-label>
                 <input matInput placeholder="Ej: tugatita69@hot.oreja" required name="email" ngModel email>
-                <mat-error *ngIf="form.controls['email'].invalid || form.controls['email'].touched">
+                <mat-error *ngIf="form.controls['email']?.invalid || form.controls['email']?.touched">
                     <span *ngIf="form.controls['email'].errors?.['required']">Este campo es obligatorio.</span>
                     <span *ngIf="form.controls['email'].errors?.['email']">Ingrese un correo válido.</span>
                 </mat-error>
@@ -29,7 +29,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Nombre de Usuario</mat-label>
                 <input matInput placeholder="Ej: juanxirivella902" required name="username" ngModel minlength=5>
-                <mat-error *ngIf="form.controls['username'].invalid || form.controls['username'].dirty">
+                <mat-error *ngIf="form.controls['username']?.invalid || form.controls['username']?.dirty">
                     <span *ngIf="form.controls['username'].errors?.['required']">Este campo es
                         obligatorio.</span>
                     <span *ngIf="form.controls['username'].errors?.['minlength']">Mínimo 5 caracteres.</span>
@@ -45,7 +45,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Contraseña</mat-label>
                 <input matInput type="password" placeholder="********" required name="password" ngModel minlength="6">
-                <mat-error *ngIf="form.controls['password'].invalid || form.controls['password'].dirty">
+                <mat-error *ngIf="form.controls['password']?.invalid || form.controls['password']?.dirty">
                     <span *ngIf="form.controls['password'].errors?.['required']">Este campo es
                         obligatorio.</span>
                     <span *ngIf="form.controls['password'].errors?.['minlength']">Mínimo 6 caracteres.</span>
@@ -61,9 +61,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Repetir contraseña</mat-label>
                 <input matInput type="password" placeholder="********" required name="confirmPassword" ngModel>
-                <mat-error *ngIf="form.controls['confirmPassword'].invalid || form.controls['confirmPassword'].touched">
-                    <span *ngIf="form.controls['confirmPassword'].errors?.['required']">Este campo es
-                        obligatorio.</span>
+                <mat-error *ngIf="form.controls['confirmPassword']?.touched">
                     <span *ngIf="passwordMismatch">Las contraseñas no coinciden.</span>
                 </mat-error>
             </mat-form-field>
