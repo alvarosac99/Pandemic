@@ -29,7 +29,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class RegisterComponent {
 
-
   passwordMismatch: boolean = false;
 
   constructor(private router: Router) { }
