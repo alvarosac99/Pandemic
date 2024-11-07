@@ -61,8 +61,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Repetir contraseña</mat-label>
                 <input matInput type="password" placeholder="********" required name="confirmPassword" ngModel>
-                <mat-error
-                    *ngIf="form.controls['confirmPassword']?.invalid || form.controls['confirmPassword'].touched">
+                <mat-error *ngIf="form.controls['confirmPassword']?.invalid || form.controls['confirmPassword'].touched">
                     <span *ngIf="form.controls['confirmPassword']?.errors?.['required']">Este campo es
                         obligatorio.</span>
                     <span *ngIf="passwordMismatch">Las contraseñas no coinciden.</span>

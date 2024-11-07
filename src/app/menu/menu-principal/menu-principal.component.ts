@@ -31,7 +31,7 @@ export class MenuPrincipalComponent {
     this.router.navigate(['menu/cargar'])
   }
   goToNueva() {
-    this.router.navigate(['menu/nueva'])
+    this.router.navigate(['juego'])
   }
 
 }

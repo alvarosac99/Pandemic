@@ -5,6 +5,7 @@ import { MenuPrincipalComponent } from './menu-principal/menu-principal.componen
 import { AutoresComponent } from './autores/autores.component';
 import { VersionComponent } from './version/version.component';
 import { InfoComponent } from './info/info.component';
+import { JuegoComponent } from '../juego/juego.component';
 
 const routes: Routes = [
   { path: '', component: MenuPrincipalComponent },
