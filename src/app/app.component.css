@@ -1,4 +1,4 @@
-.content {
+.main-content {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,6 +12,20 @@
             #589B1B 50%);
     background-size: 100px 100px;
     animation: move-it 2s linear infinite;
+
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+/*Cambiar a este cuando entre al juego*/
+.game-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    background-color: rgba(0, 0, 0, 0.836);
 
     height: 100%;
     margin: 0;

@@ -1,25 +1,36 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { MatCard } from '@angular/material/card';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    MatCard,
-    MatFormField,
-    MatInputModule,
-    MatButtonModule,
-    FormsModule
-  ],
   templateUrl: './app.component.html',
+  standalone: true,
+  imports: [RouterOutlet],
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'pandemic';
+export class AppComponent implements OnInit {
+  title = "PANDEMIC";
+  constructor(private router: Router) { }
+
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.updateContentClass(event.urlAfterRedirects);
+      }
+    });
+  }
+
+  updateContentClass(url: string) {
+    const contentElement = document.querySelector('.content');
+
+    if (contentElement) {
+      contentElement.classList.remove('main-content', 'game-content');
+
+      if (url === '/game/inGame') {
+        contentElement.classList.add('game-content')
+      } else {
+        contentElement.classList.add('main-content');
+      }
+    }
+  }
 }
