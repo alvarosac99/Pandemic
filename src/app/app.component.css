@@ -21,11 +21,8 @@
 
 /*Cambiar a este cuando entre al juego*/
 .game-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 70vh;
-    background-color: rgba(0, 0, 0, 0.836);
+    background-color: rgb(13, 48, 80);
 
     height: 100%;
     margin: 0;

@@ -4,7 +4,7 @@ import { MainComponent } from './main/main.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
-    { path: '', component: MainComponent }, // Ruta para la pagina principal
+    { path: '', redirectTo: '/game', pathMatch: 'full' }, // Ruta para la pagina principal
     { path: 'perfil', loadChildren: () => import('./perfil/perfil.module').then(m => m.PerfilModule) }, //Ruta para el perfil
     { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) }, //Ruta para el login o register
     { path: 'menu', loadChildren: () => import('./menu/menu.module').then(m => m.MenuModule) }, //Ruta para el menú
