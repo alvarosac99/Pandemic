@@ -1,19 +1,12 @@
 
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { CargarJsonService } from '../cargar-json.service'
-interface City {
-  name: string;
-  id: number;
-  coords: [number, number];
-  neighbors: string[];
-}
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-main-game',
   templateUrl: './main-game.component.html',
   styleUrls: ['./main-game.component.css'],
 })
-export class MainGameComponent implements OnInit, AfterViewInit {
+export class MainGameComponent {
   @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
   @ViewChild('mapImage', { static: false }) mapImage!: ElementRef;
 
@@ -21,23 +14,8 @@ export class MainGameComponent implements OnInit, AfterViewInit {
   lastX = 0;
   lastY = 0;
   isDragging = false;
-  cities: City[] = [];
   cityElements: any[] = [];
 
-  constructor(private cargarJsonService: CargarJsonService) { }
-
-  ngOnInit(): void {
-
-    this.cargarJsonService.getCitiesData().subscribe(
-      (data: City[]) => {
-        this.cities = data;
-        this.createCityElements();
-      },
-      (error) => {
-        console.error('Error al cargar las ciudades:', error);
-      }
-    );
-  }
 
   ngAfterViewInit(): void {
     if (this.mapContainer && this.mapImage) {
@@ -50,63 +28,6 @@ export class MainGameComponent implements OnInit, AfterViewInit {
       console.error('ERROR: no existen los elementos');
     }
   }
-
-  createCityElements() {
-    const container = this.mapContainer.nativeElement;
-
-
-    this.cities.forEach((city) => {
-
-      const circle = document.createElement('div');
-      circle.classList.add('city-circle');
-      circle.style.position = 'absolute';
-      circle.style.left = `${city.coords[0]}px`;
-      circle.style.top = `${city.coords[1]}px`;
-      circle.style.transform = `scale(${this.scale})`;
-
-
-      const label = document.createElement('span');
-      label.classList.add('city-label');
-      label.innerText = city.name;
-      circle.appendChild(label);
-
-      container.appendChild(circle);
-      this.cityElements.push({ city, circle });
-
-
-      city.neighbors.forEach((neighborName: string) => {
-        const neighbor = this.cities.find((c) => c.name === neighborName);
-        if (neighbor) {
-          this.connectCities(city, neighbor);
-        }
-      });
-    });
-  }
-
-  connectCities(city1: City, city2: City): void {
-    const line: HTMLDivElement = document.createElement('div');
-    line.classList.add('connection-line');
-
-    const x1 = city1.coords[0];
-    const y1 = city1.coords[1];
-    const x2 = city2.coords[0];
-    const y2 = city2.coords[1];
-
-    const deltaX = x2 - x1;
-    const deltaY = y2 - y1;
-    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
-
-    line.style.position = 'absolute';
-    line.style.width = `${distance}px`;
-    line.style.transform = `rotate(${angle}deg)`;
-    line.style.left = `${x1}px`;
-    line.style.top = `${y1}px`;
-
-
-    this.mapContainer.nativeElement.appendChild(line);
-  }
-
   onWheel(event: WheelEvent): void {
     event.preventDefault();
 

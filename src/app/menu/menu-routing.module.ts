@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MenuModule } from './menu.module';
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import { AutoresComponent } from './autores/autores.component';
 import { VersionComponent } from './version/version.component';
 import { InfoComponent } from './info/info.component';
-import { JuegoComponent } from '../juego/juego.component';
 
 const routes: Routes = [
   { path: '', component: MenuPrincipalComponent },
