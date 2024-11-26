@@ -6,11 +6,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { Usuario } from '../../models/usuario.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatLabel, MatHint, MatButtonModule],
+  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatLabel, MatHint, MatButtonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,9 +32,40 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class LoginComponent {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private auth: AuthService) { }
 
-  goToMenu() {
-    this.router.navigate(['/menu']);
+  onSubmit(form: NgForm) {
+
+    //this.marcarTodosLosCampos(form);  PROBABLEMENTE NO SIRVA PARA NADA PERO POR PROBAR...
+
+    if (form.valid) {
+      //A partir de aqui: Todo lo que sucede tras un registro exitoso :)
+      const usuario: Usuario = {
+        username: form.value['username'],
+        password: form.value['password'],
+        email: null
+      }
+
+      this.auth.login(usuario).subscribe(
+        response => {
+          if (response) {
+            console.log('Inicio de sesión exitoso')
+            form.reset();
+            this.router.navigate(['/menu']);
+          } else {
+            console.error('Error en el login');
+          }
+        },
+        error => {
+          console.error('Error en el login', error);
+        }
+      );
+
+
+
+    } else {
+      //Aquí si el formulario es inválido
+    }
   }
+
 }

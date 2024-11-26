@@ -2,17 +2,19 @@
     <img src="imgs/titleText.gif" alt="Título">
     <mat-card-title>Iniciar Sesión</mat-card-title>
     <mat-card-content>
-        <mat-form-field appearance="fill">
-            <mat-label>Nombre de Usuario</mat-label>
-            <input matInput placeholder="Ej: juan123" required>
-        </mat-form-field>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)" action="comprobar_usuario.php">
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre de Usuario</mat-label>
+                <input matInput required name="username" ngModel minlength=5>
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Contraseña</mat-label>
-            <input matInput type="password" placeholder="********" required>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" placeholder="********" required name="password" ngModel minlength="6">
+            </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit" (click)="goToMenu()">Iniciar Sesión</button>
-        <p>¿No tienes una cuenta? <a href="/auth/register">Regístrate</a></p>
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Iniciar Sesión</button>
+            <p>¿No tienes una cuenta? <a href="/auth/register">Regístrate</a></p>
+        </form>
     </mat-card-content>
 </mat-card>
