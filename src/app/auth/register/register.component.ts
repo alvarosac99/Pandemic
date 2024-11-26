@@ -32,6 +32,7 @@ import { Usuario } from '../../models/usuario.model';
 export class RegisterComponent {
 
   passwordMismatch: boolean = false;
+  authService: any;
 
 
   constructor(private router: Router, private auth: AuthService) { }
@@ -68,7 +69,16 @@ export class RegisterComponent {
           password: form.value['password'],
           email: form.value['email']
         }
-        
+
+        this.auth.register(usuario).subscribe(
+          response => {
+            console.log('Registro exitoso', response);
+          },
+          error => {
+            console.error('Error en el registro', error);
+          }
+        );
+
         form.reset();
         this.router.navigate(['/auth/login'])
 
