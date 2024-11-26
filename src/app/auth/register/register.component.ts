@@ -8,6 +8,8 @@ import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { AuthService } from '../../services/auth.service';
+import { Usuario } from '../../models/usuario.model';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +33,8 @@ export class RegisterComponent {
 
   passwordMismatch: boolean = false;
 
-  constructor(private router: Router) { }
+
+  constructor(private router: Router, private auth: AuthService) { }
 
   onSubmit(form: NgForm) {
     console.log(this.passwordMismatch);
@@ -59,8 +62,16 @@ export class RegisterComponent {
 
         //A partir de aqui: Todo lo que sucede tras un registro exitoso :)
         console.log('Registro exitoso', form.value);
+
+        const usuario: Usuario = {
+          username: form.value['username'],
+          password: form.value['password'],
+          email: form.value['email']
+        }
+        
         form.reset();
         this.router.navigate(['/auth/login'])
+
       }
     } else {
       console.log('Formulario inválido');

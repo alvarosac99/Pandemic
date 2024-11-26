@@ -8,9 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
+  private insertarUserUrl = 'insertar_usuario.php'
+  private apiUrl = 'http://localhost/';
+
   constructor(private http: HttpClient) { }
 
-  register(usuario: Usuario){
-    this.http.post()
+  register(usuario: Usuario) {
+    return this.http.post(this.apiUrl + this.insertarUserUrl, JSON.stringify(usuario))
   }
 }
