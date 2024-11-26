@@ -68,12 +68,12 @@ export class RegisterComponent {
           email: form.value['email']
         }
 
-        this.auth.login(usuario).subscribe(
+        this.auth.register(usuario).subscribe(
           response => {
             if (response.status = 'succes') {
               console.log('Registro exitoso', response);
               form.reset();
-              this.router.navigate(['/menu']);
+              this.router.navigate(['/login']);
             } else {
               console.error('Error en el registro');
             }
