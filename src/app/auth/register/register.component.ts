@@ -62,8 +62,6 @@ export class RegisterComponent {
         this.passwordMismatch = false; // Resetea el error si coinciden
 
         //A partir de aqui: Todo lo que sucede tras un registro exitoso :)
-        console.log('Registro exitoso', form.value);
-
         const usuario: Usuario = {
           username: form.value['username'],
           password: form.value['password'],
