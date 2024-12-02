@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../models/usuario.model';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-register',
@@ -71,9 +72,16 @@ export class RegisterComponent {
         this.auth.register(usuario).subscribe(
           response => {
             if (response.status = 'succes') {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500
+              });
               console.log('Registro exitoso', response);
               form.reset();
-              this.router.navigate(['/login']);
+              this.router.navigate(['auth/login']);
             } else {
               console.error('Error en el registro');
             }
@@ -83,9 +91,17 @@ export class RegisterComponent {
           }
         );
 
+        Swal.fire({
+          backdrop: "true",
+          position: "center",
+          icon: "success",
+          title: "Usuario registrado correctamente",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        console.log('Registro exitoso');
         form.reset();
-        this.router.navigate(['/auth/login'])
-
+        this.router.navigate(['auth/login']);
       }
     } else {
       console.log('Formulario inválido');
