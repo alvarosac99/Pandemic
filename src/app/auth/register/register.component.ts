@@ -81,7 +81,7 @@ export class RegisterComponent {
               });
               console.log('Registro exitoso', response);
               form.reset();
-              this.router.navigate(['auth/login']);
+              this.router.navigate(['/auth/login']);
             } else {
               console.error('Error en el registro');
             }
@@ -101,7 +101,7 @@ export class RegisterComponent {
         });
         console.log('Registro exitoso');
         form.reset();
-        this.router.navigate(['auth/login']);
+        this.router.navigate(['/auth/login']);
       }
     } else {
       console.log('Formulario inválido');
