@@ -14,8 +14,24 @@
     z-index: 2;
     transition: transform 0.3s ease-in-out;
     overflow: auto;
+    font-size: larger;
+
 }
 
+
+.contenido {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: rgba(92, 202, 82, 0.822);
+    padding-top: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.pandemic {
+    display: flex;
+    justify-content: center;
+}
 
 .cajita::-webkit-scrollbar {
     width: 12px;
@@ -34,7 +50,7 @@
 
 
 .cajita::-webkit-scrollbar-thumb {
-    background: #162A09;
+    background: rgba(92, 202, 82, 0.822);
 
     border-radius: 10px;
 
@@ -42,14 +58,13 @@
 
 
 .cajita::-webkit-scrollbar-thumb:hover {
-    background: #4c881c;
+    background: rgba(66, 146, 59, 0.822);
 
 }
 
 
 .cajita::-webkit-scrollbar-thumb:active {
-    background: #142c15;
-
+    background: rgba(42, 94, 38, 0.822);
 }
 
 @media (max-width: 768px) {
@@ -65,6 +80,16 @@
 
             padding: 10px;
 
+        }
+
+        .contenido {
+            width: 93%;
+            height: auto;
+            top: 0;
+            left: 0;
+            transform: none;
+
+            padding: 10px;
         }
     }
 }
