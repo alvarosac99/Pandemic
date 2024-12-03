@@ -1,21 +1,23 @@
-<div id="cajita" >
-    <img *ngIf="randomNumber != 0" src="imgs/titleText.gif" alt="Título" id="titulo">
-    <img *ngIf="randomNumber == 0" src="imgs/text.gif" alt="Título" id="titulo" style="padding: 90px;">
-    <h2 *ngIf="randomNumber != 0">Autores</h2>
+<div *ngIf="randomNumber != 0" id="cajita">
+    <img src="imgs/titleText.gif" alt="Título" id="titulo">
+    <h2>Autores</h2>
     <div id="horizontal">
         <div class="autor" id="izquierda">
             <div class="contenedorIcono">
-                <img *ngIf="randomNumber != 0" src="imgs/sopa.jpg" alt="Sebas" class="iconoAutor">
-                <img *ngIf="randomNumber == 0" src="imgs/olasebas.jpg" alt="PINGA" class="iconoAutor" style="height: 150%;">
+                <img src="imgs/sopa.jpg" alt="Sebas" class="iconoAutor">
             </div>
-            <p *ngIf="randomNumber !=0">Sebastián "Sopa" Acosta Cortizas</p>
+            <p>Sebastián "Sopa" Acosta Cortizas</p>
         </div>
-    
-        <div *ngIf="randomNumber != 0" class="autor" id="derecha">
+
+        <div class="autor" id="derecha">
             <img src="imgs/pendejo.png" alt="Ángel" class="iconoAutor">
             <p>Ángel "Gelo" Muñoz Couso</p>
         </div>
     </div>
-    <p *ngIf="randomNumber ==0"> Esto es un EasterEgg, recarga para ver la pagina real</p>
 </div>
 
+<div *ngIf="randomNumber == 0" id="cajita">
+    <p> Esto es un EasterEgg, recarga para ver la pagina real</p>
+    <img src="imgs/text.gif" alt="Título" id="titulo" style="padding: 90px;">
+    <img src="imgs/olasebas.jpg" alt="PINGA" class="iconoAutor" style="height: 150%; align-content: center;">
+</div>
