@@ -4,12 +4,14 @@ import { MenuPrincipalComponent } from './menu-principal/menu-principal.componen
 import { AutoresComponent } from './autores/autores.component';
 import { VersionComponent } from './version/version.component';
 import { InfoComponent } from './info/info.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 const routes: Routes = [
   { path: '', component: MenuPrincipalComponent },
   { path: 'autores', component: AutoresComponent },
   { path: 'version', component: VersionComponent },
-  { path: 'informacion', component: InfoComponent }
+  { path: 'informacion', component: InfoComponent },
+  { path: 'perfil', component: PerfilComponent }
 ];
 
 @NgModule({

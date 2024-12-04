@@ -33,5 +33,8 @@ export class MenuPrincipalComponent {
   goToNueva() {
     this.router.navigate(['game/inGame'])
   }
+  goToPerfil() {
+    this.router.navigate(['menu/perfil'])
+  }
 
 }
