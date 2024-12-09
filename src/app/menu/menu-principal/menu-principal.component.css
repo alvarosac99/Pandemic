@@ -1,4 +1,4 @@
-#cajita {
+.card {
     display: flex;
     flex-direction: column;
     background-color: #b7ff80d2;
