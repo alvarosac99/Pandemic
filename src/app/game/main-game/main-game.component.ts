@@ -1,91 +1,75 @@
-
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-game',
   templateUrl: './main-game.component.html',
   styleUrls: ['./main-game.component.css'],
 })
-export class MainGameComponent {
+export class MainGameComponent implements AfterViewInit {
   @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
   @ViewChild('mapImage', { static: false }) mapImage!: ElementRef;
 
-  scale = 1;
-  lastX = 0;
-  lastY = 0;
-  isDragging = false;
   cityElements: any[] = [];
 
+  constructor(private http: HttpClient) { }
 
   ngAfterViewInit(): void {
-    if (this.mapContainer && this.mapImage) {
-      this.mapContainer.nativeElement.addEventListener('wheel', this.onWheel.bind(this));
-      this.mapContainer.nativeElement.addEventListener('mousedown', this.onMouseDown.bind(this));
-      this.mapContainer.nativeElement.addEventListener('mousemove', this.onMouseMove.bind(this));
-      this.mapContainer.nativeElement.addEventListener('mouseup', this.onMouseUp.bind(this));
-      this.mapContainer.nativeElement.addEventListener('mouseleave', this.onMouseUp.bind(this))
-    } else {
-      console.error('ERROR: no existen los elementos');
-    }
+    this.loadCities();
   }
-  onWheel(event: WheelEvent): void {
-    event.preventDefault();
 
-    const rect = this.mapContainer.nativeElement.getBoundingClientRect();
-    const offsetX = event.clientX - rect.left;
-    const offsetY = event.clientY - rect.top;
-
-    let newScale = this.scale - event.deltaY * 0.01;
-    newScale = Math.min(Math.max(0.125, newScale), 4);
-
-    const scaleRatio = newScale / this.scale;
-
-
-    this.cityElements.forEach(({ city, circle }) => {
-      circle.style.transform = `scale(${newScale})`;
+  loadCities(): void {
+    this.http.get<any[]>('game/ciudades.json').subscribe({
+      next: (data) => {
+        this.renderCities(data);
+      },
+      error: (err) => {
+        console.error('Error al cargar el archivo JSON', err);
+      },
     });
-
-
-    this.scale = newScale;
   }
 
-  onMouseDown(event: MouseEvent): void {
-    event.preventDefault();
-    this.isDragging = true;
-    this.lastX = event.clientX;
-    this.lastY = event.clientY;
+  renderCities(cities: any[]): void {
+    const mapImageElement = this.mapImage.nativeElement as HTMLImageElement;
+    const mapContainerElement = this.mapContainer.nativeElement as HTMLElement;
+
+    mapImageElement.onload = () => this.placeCities(cities, mapImageElement, mapContainerElement);
+    this.placeCities(cities, mapImageElement, mapContainerElement);
   }
 
-  onMouseMove(event: MouseEvent): void {
-    if (!this.isDragging) return;
+  placeCities(cities: any[], mapImage: HTMLImageElement, mapContainer: HTMLElement): void {
 
-    event.preventDefault();
+    cities.forEach((city) => {
+      const x = city.coords[0];
+      const y = city.coords[1];
 
-    const deltaX = event.clientX - this.lastX;
-    const deltaY = event.clientY - this.lastY;
+      //MARCADOR
+      const circle = document.createElement('div');
+      circle.className = 'city-marker';
+      circle.style.position = 'absolute';
+      circle.style.left = `${x -95}px`;
+      circle.style.top = `${y -95}px`;
+      circle.style.width = '10px';
+      circle.style.height = '10px';
+      circle.style.backgroundColor = 'red';
+      circle.style.borderRadius = '50%';
 
+      //NOMBRE CIUDAD
+      const label = document.createElement('span');
+      label.className = 'city-label';
+      label.innerText = city.name;
+      label.style.position = 'absolute';
+      label.style.top = '-20px'; 
+      label.style.left = '5px';
+      label.style.color = 'white';
+      label.style.fontSize = '12px';
+      label.style.textShadow = '1px 1px 2px black';
 
-    const mapImage = this.mapImage.nativeElement;
-    const currentTransform = mapImage.style.transform;
-    const translateRegex = /translate\((-?\d+)px, (-?\d+)px\)/;
-    const matches = currentTransform.match(translateRegex);
-    let currentTranslateX = 0;
-    let currentTranslateY = 0;
-    if (matches) {
-      currentTranslateX = parseInt(matches[1], 10);
-      currentTranslateY = parseInt(matches[2], 10);
-    }
+      circle.appendChild(label);
+      mapContainer.appendChild(circle);
 
-    const newTranslateX = currentTranslateX + deltaX;
-    const newTranslateY = currentTranslateY + deltaY;
-
-    mapImage.style.transform = `scale(${this.scale}) translate(${newTranslateX}px, ${newTranslateY}px)`;
-
-    this.lastX = event.clientX;
-    this.lastY = event.clientY;
-  }
-
-  onMouseUp(event: MouseEvent): void {
-    this.isDragging = false;
+      //se guarda la info por si hay que modificarla (Ej: cambiar color del circulo cuando esté en peligro o tal)
+      this.cityElements.push({ name: city.name, circle });
+    });
   }
 }
