@@ -33,7 +33,6 @@ export class MainGameComponent implements AfterViewInit {
     const mapImageElement = this.mapImage.nativeElement as HTMLImageElement;
     const mapContainerElement = this.mapContainer.nativeElement as HTMLElement;
 
-    mapImageElement.onload = () => this.placeCities(cities, mapImageElement, mapContainerElement);
     this.placeCities(cities, mapImageElement, mapContainerElement);
   }
 
