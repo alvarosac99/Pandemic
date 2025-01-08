@@ -13,6 +13,10 @@
                 <input matInput type="password" placeholder="********" required name="password" ngModel minlength="6">
             </mat-form-field>
 
+            <mat-checkbox name="recordar" ngModel>
+                <mat-label>Mantener sesión iniciada</mat-label>
+            </mat-checkbox>
+
             <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Iniciar Sesión</button>
             <p>¿No tienes una cuenta? <a href="/auth/register">Regístrate</a></p>
         </form>
