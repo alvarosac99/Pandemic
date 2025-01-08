@@ -10,11 +10,13 @@ import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
+import { MatCheckbox } from '@angular/material/checkbox';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatLabel, MatHint, MatButtonModule, FormsModule],
+  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatLabel, MatButtonModule, FormsModule, MatCheckbox],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +36,14 @@ export class LoginComponent {
 
   constructor(private router: Router, private auth: AuthService) { }
 
+
+  ngOnInit(): void {
+    const usuario = localStorage.getItem('usuario');
+    if (usuario) {
+      this.router.navigate(['/menu']);
+    }
+  }
+
   onSubmit(form: NgForm) {
 
     //this.marcarTodosLosCampos(form);  PROBABLEMENTE NO SIRVA PARA NADA PERO POR PROBAR...
@@ -46,10 +56,17 @@ export class LoginComponent {
         email: null
       }
 
+      const rememberMe = form.value['recordar']; //
+
       this.auth.login(usuario).subscribe(
         response => {
           if (response) {
-            console.log('Inicio de sesión exitoso')
+            console.log('Inicio de sesión exitoso');
+
+            if (rememberMe) {
+              localStorage.setItem('usuario', JSON.stringify(usuario));
+            }
+
             form.reset();
             this.router.navigate(['/menu']);
           } else {
@@ -60,12 +77,8 @@ export class LoginComponent {
           console.error('Error en el login', error);
         }
       );
-
-
-
     } else {
-      //Aquí si el formulario es inválido
+      console.log('Formulario inválido');
     }
   }
-
 }
