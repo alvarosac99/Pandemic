@@ -1,3 +1,28 @@
-<div class="content">
-    <router-outlet class="component"></router-outlet>
-</div>
+<button mat-icon-button class="fixed-button" (click)="toggleSidenav()">
+    <mat-icon>menu</mat-icon>
+</button>
+
+<mat-sidenav-container style="height: 100vh;">
+    <!-- Sidenav -->
+    <mat-sidenav #sidenav mode="over" opened="false">
+        <mat-nav-list>
+            <mat-list-item>
+                <mat-icon>account_circle</mat-icon>
+                <span>Sebastián Acosta</span>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon>link</mat-icon>
+                <a href="https://github.com/alvarosac99" target="_blank">Mi página de GitHub</a>
+            </mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <!-- Contenido principal -->
+    <mat-sidenav-content>
+
+        <!-- Contenido -->
+        <div class="content">
+            <router-outlet class="component"></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

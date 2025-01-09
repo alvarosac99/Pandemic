@@ -28,3 +28,86 @@
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.fixed-button {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 2;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+}
+
+.fixed-button mat-icon {
+    font-size: 24px;
+    /* Tamaño del ícono */
+    color: #3f51b5;
+    /* Color del ícono */
+}
+
+mat-sidenav-container {
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* Estilo para el sidenav */
+mat-sidenav {
+    width: 250px;
+    position: absolute;
+    z-index: 2;
+}
+
+
+mat-sidenav-container {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Estilo para el sidenav */
+mat-sidenav {
+  width: 250px;
+  position: fixed;
+  z-index: 10000;
+}
+
+/* Estilo para la barra de herramientas */
+mat-toolbar {
+  background: #3f51b5;
+  color: white;
+}
+
+/* Estilo para los botones de la toolbar */
+mat-toolbar p {
+  margin: 5px;
+  cursor: pointer;
+}
+
+mat-toolbar p:hover {
+  transform: scale(1.125);
+  ;
+}
+
+/* Elementos del sidenav */
+mat-list-item {
+  cursor: pointer;
+  align-items: center;
+}
+
+/* Estilo para los enlaces dentro del sidenav */
+mat-list-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Ajuste adicional para los iconos dentro de los enlaces */
+mat-list-item a mat-icon {
+  margin-right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

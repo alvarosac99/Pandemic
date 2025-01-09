@@ -3,11 +3,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { routes } from '../../app.routes';
+import { MatToolbar } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-menu-principal',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule, MatToolbar],
   templateUrl: './menu-principal.component.html',
   styleUrl: './menu-principal.component.css'
 })

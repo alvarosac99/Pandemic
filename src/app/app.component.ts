@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgIf } from '@angular/common';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MatToolbarModule, NgIf, MatSidenavModule, MatListModule, MatIconModule],
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   title = "PANDEMIC";
+
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
+  toggleSidenav() {
+    this.sidenav.toggle();
+  }
+
   constructor(private router: Router) { }
 
   ngOnInit() {
