@@ -72,40 +72,45 @@ export class RegisterComponent {
         this.auth.register(usuario).subscribe(
           response => {
             if (response.status = 'succes') {
+              console.log('1');
+              console.log('Registro exitoso', response);
               Swal.fire({
+                backdrop: "true",
                 position: "center",
                 icon: "success",
-                title: "Your work has been saved",
+                title: "Usuario registrado correctamente",
                 showConfirmButton: false,
                 timer: 1500
               });
-              console.log('Registro exitoso', response);
               form.reset();
               this.router.navigate(['/auth/login']);
             } else {
+              console.log('2');
               console.error('Error en el registro');
             }
           },
           error => {
+            console.log('3');
             console.error('Error en el registro', error);
           }
         );
-
-        Swal.fire({
-          backdrop: "true",
-          position: "center",
-          icon: "success",
-          title: "Usuario registrado correctamente",
-          showConfirmButton: false,
-          timer: 1500
-        });
         console.log('Registro exitoso');
         form.reset();
         this.router.navigate(['/auth/login']);
       }
     } else {
+      console.log('5');
       console.log('Formulario inválido');
+
     }
+    Swal.fire({
+      backdrop: "true",
+      position: "center",
+      icon: "error",
+      title: "Error de servidor",
+      showConfirmButton: false,
+      timer: 1500
+    });
 
 
 
