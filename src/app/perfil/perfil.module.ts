@@ -1,13 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PerfilRoutingModule } from './perfil-routing.module';
-
+import { PerfilComponent } from '../menu/perfil/perfil.component';
+import { ImageCropperComponent } from 'ngx-image-cropper';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    PerfilComponent,
+  ],
   imports: [
     CommonModule,
-    PerfilRoutingModule
+    ImageCropperComponent
+  ],
+  exports: [
+    PerfilComponent,
   ]
 })
 export class PerfilModule { }

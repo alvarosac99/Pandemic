@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuPrincipalComponent } from './menu-principal.component';
 
-describe('MenuPrincipalComponent', () => {
-  let component: MenuPrincipalComponent;
-  let fixture: ComponentFixture<MenuPrincipalComponent>;
+import { ImagenPerfilComponent } from './imagen-perfil.component';
+
+describe('ImagenPerfilComponent', () => {
+  let component: ImagenPerfilComponent;
+  let fixture: ComponentFixture<ImagenPerfilComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MenuPrincipalComponent]
+      imports: [ImagenPerfilComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MenuPrincipalComponent);
+    fixture = TestBed.createComponent(ImagenPerfilComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

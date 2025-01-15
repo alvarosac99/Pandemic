@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule, NgIf, MatSidenavModule, MatListModule, MatIconModule],
+  imports: [RouterOutlet, MatToolbarModule, NgIf, MatSidenavModule, MatListModule, MatIconModule,],
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
