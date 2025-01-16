@@ -65,6 +65,7 @@ export class LoginComponent {
 
             if (rememberMe) {
               localStorage.setItem('usuario', JSON.stringify(usuario));
+              this.auth.setSession(usuario);
             }
 
             form.reset();
@@ -82,3 +83,4 @@ export class LoginComponent {
     }
   }
 }
+

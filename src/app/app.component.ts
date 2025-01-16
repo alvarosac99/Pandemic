@@ -5,6 +5,7 @@ import { NgIf } from '@angular/common';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,9 @@ export class AppComponent implements OnInit {
     this.sidenav.toggle();
   }
 
-  constructor(private router: Router) { }
+
+
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -30,6 +33,12 @@ export class AppComponent implements OnInit {
         this.updateContentClass(event.urlAfterRedirects);
       }
     });
+
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['auth/menu']);
+    } else {
+      this.router.navigate(['auth/login']);
+    }
   }
 
   updateContentClass(url: string) {
@@ -45,4 +54,9 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
+  // @HostListener('window:beforeunload', ['$event'])
+  // unloadNotification($event: any): void {
+  //   $event.returnValue = true;
+  // }
 }

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ImageCropperComponent,ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
+import { ImageCropperComponent, ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-imagen-perfil',
   standalone: true,
-  imports: [ImageCropperComponent],
+  imports: [ImageCropperComponent, CommonModule],
   templateUrl: './imagen-perfil.component.html',
   styleUrls: ['./imagen-perfil.component.css']
 })
@@ -13,7 +14,7 @@ export class ImagenPerfilComponent {
   imageChangedEvent: any = '';
   croppedImage: SafeUrl = '';
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer) { }
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
@@ -39,7 +40,7 @@ export class ImagenPerfilComponent {
     console.error('Error al cargar la imagen');
   }
 
-  uploadImage(): void{
-    
+  uploadImage(): void {
+
   }
 }
