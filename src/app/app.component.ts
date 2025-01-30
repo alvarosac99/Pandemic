@@ -34,11 +34,13 @@ export class AppComponent implements OnInit {
       }
     });
 
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['auth/menu']);
-    } else {
-      this.router.navigate(['auth/login']);
-    }
+    //NO es ni seguro ni correcto hacer esto aquí
+
+    //if (this.authService.isAuthenticated()) {
+    //  this.router.navigate(['auth/menu']);
+    //} else {
+    //  this.router.navigate(['auth/login']);
+    //}
   }
 
   updateContentClass(url: string) {
