@@ -23,9 +23,19 @@ export class AppComponent implements OnInit {
     this.sidenav.toggle();
   }
 
+  goToMenu() {
+    this.router.navigate(['/menu']);
+  }
 
+  showButton: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {
+    //asigna true al boolean de arriba cuando la ruta en la que se encuentra el cliente es una de las incluidas en el array
+    this.router.events.subscribe(() => {
+      const allowedRoutes = ['/menu/autores', '/menu/version', '/menu/informacion', '/menu/perfil'];
+      this.showButton = allowedRoutes.includes(this.router.url);
+    });
+  }
 
   ngOnInit() {
     this.router.events.subscribe(event => {

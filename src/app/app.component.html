@@ -1,5 +1,9 @@
-<button mat-icon-button class="fixed-button" (click)="toggleSidenav()">
+<button mat-icon-button class="fixed-button" id="menu" (click)="toggleSidenav()">
     <mat-icon>menu</mat-icon>
+</button>
+
+<button *ngIf="showButton" mat-icon-button class="fixed-button" id="salir" (click)="goToMenu()">
+    <mat-icon>close</mat-icon>
 </button>
 
 <mat-sidenav-container style="height: 100vh;">
