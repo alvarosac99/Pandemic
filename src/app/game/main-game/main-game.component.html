@@ -1,9 +1,24 @@
 <div class="container">
   <div #mapContainer class="map-container">
     <img class="map-image" src="game/mapa_mundo.png" alt="Mapa del Mundo" #mapImage>
+    <canvas #canvasOverlay style="position: absolute; top: 0; left: 0; width: 100%; height: auto;"></canvas>
   </div>
+
   <div class="menu-bar">
-    <!-- Elementos del menú -->
-    <button>PRUEBA</button><button>PRUEBA</button><button>PRUEBA</button><button>PRUEBA</button>
+    <button (click)="nextRound()">Siguiente Ronda</button>
+  </div>
+
+  <!-- Información de la ciudad seleccionada -->
+  <div class="city-info" *ngIf="selectedCity">
+    <h3>Información de la Ciudad</h3>
+    <p><strong>Nombre:</strong> {{ selectedCity.name }}</p>
+    <p><strong>Estado:</strong> {{ selectedCity.rojo === 3 ? 'Rojo' : selectedCity.azul === 3 ? 'Azul' : selectedCity.amarillo === 3 ? 'Amarillo' : selectedCity.negro === 3 ? 'Negro' : 'A salvo' }}</p>
+    <p><strong>Población:</strong> {{ selectedCity.poblacion }}</p>
+    <p>Vecinos: {{ selectedCity.neighbors.join(', ') }}</p>
+  </div>
+
+  <!-- Información de la ronda -->
+  <div class="round-info" *ngIf="roundAction">
+    <p>{{ roundAction }}</p>
   </div>
 </div>
