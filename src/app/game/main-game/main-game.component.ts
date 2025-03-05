@@ -71,8 +71,8 @@ export class MainGameComponent implements AfterViewInit {
   loadvacunas(): void {
     
     this.vacunas = [
-      { name: 'Vacuna Virus A', color: 'blue', development: 0, cantidad: 0 },
-      { name: 'Vacuna Virus B', color: 'green', development: 0, cantidad: 0 },
+      { name: 'Vacuna Virus A', color: 'blue', progreso: 0, cantidad: 0 },
+      { name: 'Vacuna Virus B', color: 'green', progreso: 0, cantidad: 0 },
     ];
   }
 
@@ -88,7 +88,6 @@ export class MainGameComponent implements AfterViewInit {
 
     this.roundAction = `Ronda ${this.currentRound}: La infección sigue propagándose.`;
 
-    let newlyInfected = [];
     const maxInfectionsPerRound = 1; 
 
     this.cities.forEach((city) => {
@@ -115,7 +114,6 @@ export class MainGameComponent implements AfterViewInit {
                   neighborCity.state = 'nivel 1'; 
                   neighborCity.infectionType = newInfection; 
                   neighborCity.outbreaks += 1;
-                  newlyInfected.push(neighborCity);
                   infectedThisRound++;
                 }
               }
@@ -263,20 +261,20 @@ export class MainGameComponent implements AfterViewInit {
   }
 
   researchvacuna(vacuna: any): void {
-    if (this.actionsRemaining <= 0 || vacuna.development === 100) {
+    if (this.actionsRemaining <= 0 || vacuna.progreso === 100) {
       return; 
     }
 
-    vacuna.development += 25; 
-    if (vacuna.development > 100) {
-      vacuna.development = 100; 
+    vacuna.progreso += 25; 
+    if (vacuna.progreso > 100) {
+      vacuna.progreso = 100; 
     }
 
     this.actionsRemaining--; 
-    this.roundAction = `Investigando ${vacuna.name}... Progreso: ${vacuna.development}%`;
+    this.roundAction = `Investigando ${vacuna.name}... Progreso: ${vacuna.progreso}%`;
 
     
-    if (vacuna.development === 100) {
+    if (vacuna.progreso === 100) {
       this.roundAction = `${vacuna.name} está lista para ser fabricada.`;
     }
   }
@@ -285,7 +283,7 @@ export class MainGameComponent implements AfterViewInit {
     if (this.actionsRemaining <= 0) return; 
 
     
-    if (vacuna.development === 100) {
+    if (vacuna.progreso === 100) {
       vacuna.cantidad = (vacuna.cantidad || 0) + 1; 
       this.actionsRemaining--; 
       this.roundAction = `Creando ${vacuna.name}... Ahora tienes ${vacuna.cantidad} disponibles.`;
