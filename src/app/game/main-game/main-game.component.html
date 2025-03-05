@@ -1,9 +1,46 @@
 <div class="container">
+  <!-- Mapa y lienzo de overlay -->
   <div #mapContainer class="map-container">
     <img class="map-image" src="game/mapa_mundo.png" alt="Mapa del Mundo" #mapImage>
+    <canvas #canvasOverlay style="position: absolute; top: 0; left: 0; width: 100%; height: auto;"></canvas>
   </div>
+
+  <!-- Menú de acciones y vacunas -->
   <div class="menu-bar">
-    <!-- Elementos del menú -->
-    <button>PRUEBA</button><button>PRUEBA</button><button>PRUEBA</button><button>PRUEBA</button>
+    <button (click)="nextRound()" [disabled]="gameOver">Siguiente Ronda</button>
+    <button *ngIf="vacunas.length > 0 && vacunas[0].progreso < 100" (click)="researchvacuna(vacunas[0])">
+      Investigar Vacuna A
+    </button>
+    <button *ngIf="vacunas.length > 0 && vacunas[1].progreso < 100" (click)="researchvacuna(vacunas[1])">
+      Investigar Vacuna B
+    </button>
+    <button *ngIf="vacunas.length > 0 && vacunas[0].progreso === 100" (click)="createvacuna(vacunas[0])">
+      Crear Vacuna A
+    </button>
+    <button *ngIf="vacunas.length > 0 && vacunas[1].progreso === 100" (click)="createvacuna(vacunas[1])">
+      Crear Vacuna B
+    </button>
+
+    <!-- Información de la ciudad seleccionada dentro del mismo div -->
+    <div class="city-info" *ngIf="selectedCity">
+      <h3>Información de la Ciudad: {{ selectedCity.name }}</h3>
+      <p><strong>Estado:</strong>
+        {{ selectedCity.rojo === 3 ? 'Rojo' : selectedCity.azul === 3 ? 'Azul' : selectedCity.amarillo === 3 ?
+        'Amarillo' : selectedCity.negro === 3 ? 'Negro' : 'A salvo' }}
+      </p>
+      <p><strong>Población:</strong> {{ selectedCity.poblacion }}</p>
+      <p><strong>Estado: </strong> {{ selectedCity.state }}</p>
+      <p><strong>Vecinos:</strong> {{ selectedCity.neighbors.join(', ') }}</p>
+      <button (click)="cureCity(selectedCity, vacunas[0])"
+        [disabled]="actionsRemaining <= 0 || vacunas[0]?.progreso !== 100 || vacunas[0]?.quantity <= 0">
+        Curar Ciudad con {{ vacunas[0]?.name }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Información de la ronda -->
+  <div class="round-info" *ngIf="roundAction">
+    <p>{{ roundAction }}</p>
+    <p>Acciones restantes: {{ actionsRemaining }}</p>
   </div>
 </div>
