@@ -8,10 +8,10 @@
   <!-- Menú de acciones y vacunas -->
   <div class="menu-bar">
     <button (click)="nextRound()" [disabled]="gameOver">Siguiente Ronda</button>
-    <button *ngIf="vacunas.length > 0 && vacunas[0].progreso < 100" (click)="researchvacuna(vacunas[0])">
+    <button *ngIf="vacunas.length > 0 && vacunas[0].progreso < 100" (click)="investigarVacuna(vacunas[0])">
       Investigar Vacuna A
     </button>
-    <button *ngIf="vacunas.length > 0 && vacunas[1].progreso < 100" (click)="researchvacuna(vacunas[1])">
+    <button *ngIf="vacunas.length > 0 && vacunas[1].progreso < 100" (click)="investigarVacuna(vacunas[1])">
       Investigar Vacuna B
     </button>
     <button *ngIf="vacunas.length > 0 && vacunas[0].progreso === 100" (click)="createvacuna(vacunas[0])">

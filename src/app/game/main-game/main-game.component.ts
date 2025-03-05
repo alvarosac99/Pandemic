@@ -55,7 +55,7 @@ export class MainGameComponent implements AfterViewInit {
         
         for (let i = 0; i < this.config.initialInfectedCities; i++) {
           const randomCity = this.cities[Math.floor(Math.random() * this.cities.length)];
-          const randomInfection = this.getRandomInfection();
+          const randomInfection = this.infeccionAleatoria();
           randomCity.state = 'nivel 1'; 
           randomCity.infectionType = randomInfection; 
         }
@@ -78,7 +78,7 @@ export class MainGameComponent implements AfterViewInit {
     ];
   }
 
-  getRandomInfection(excludedInfection?: any): any {
+  infeccionAleatoria(excludedInfection?: any): any {
     const availableInfections = this.INFECTIONS.filter(infection => infection !== excludedInfection);
     return availableInfections[Math.floor(Math.random() * availableInfections.length)];
   }
@@ -111,7 +111,7 @@ export class MainGameComponent implements AfterViewInit {
               if (neighborCity && neighborCity.state === 'a salvo') {
                 
                 if (Math.random() < 0.5) { 
-                  const newInfection = this.getRandomInfection(city.infectionType);
+                  const newInfection = this.infeccionAleatoria(city.infectionType);
 
                   neighborCity.state = 'nivel 1'; 
                   neighborCity.infectionType = newInfection; 
@@ -146,11 +146,11 @@ export class MainGameComponent implements AfterViewInit {
       this.currentRound++;
     }
 
-    this.updateCityMarkers();
+    this.cambiarColor();
     this.conexiones();
   }
 
-  updateCityMarkers(): void {
+  cambiarColor(): void {
     this.cities.forEach(city => {
       const cityElement = this.cityElements.find(e => e.name === city.name);
       if (cityElement) {
@@ -247,7 +247,6 @@ export class MainGameComponent implements AfterViewInit {
       });
     }
   }
-
   
   cureCity(city: any, vacuna: any): void {
     if (vacuna.cantidad > 0 && city.state !== 'a salvo') {
@@ -262,7 +261,7 @@ export class MainGameComponent implements AfterViewInit {
     }
   }
 
-  researchvacuna(vacuna: any): void {
+  investigarVacuna(vacuna: any): void {
     if (this.actionsRemaining <= 0 || vacuna.progreso === 100) {
       return; 
     }
