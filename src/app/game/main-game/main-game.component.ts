@@ -47,12 +47,10 @@ export class MainGameComponent implements AfterViewInit {
       next: (data) => {
         this.cities = data.map(city => ({
           ...city,
-          state: 'a salvo', 
-          outbreaks: 0, 
+          state: 'a salvo',
           population: city.poblacion,
         }));
 
-        
         for (let i = 0; i < this.config.initialInfectedCities; i++) {
           const randomCity = this.cities[Math.floor(Math.random() * this.cities.length)];
           const randomInfection = this.infeccionAleatoria();
