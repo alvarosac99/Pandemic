@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/menu']);
   }
 
+  public userName: String = '';
+
   showButton: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
@@ -43,6 +45,8 @@ export class AppComponent implements OnInit {
         this.updateContentClass(event.urlAfterRedirects);
       }
     });
+    //asigna a un string el nombre del usuario logeado
+    this.userName = this.authService.getUserName();
 
     //NO es ni seguro ni correcto hacer esto aquí
 

@@ -40,6 +40,11 @@ export class AuthService {
     return usuario ? JSON.parse(usuario) : null;
   }
 
+  // Método para obtener especificamente el nombre de usuario
+  getUserName(): String {
+    return this.getUser()?.username || 'Invitado';
+  }
+
   // Método para cerrar sesión (eliminar del localStorage)
   logout(): void {
     localStorage.removeItem('usuario');
