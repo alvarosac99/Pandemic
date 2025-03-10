@@ -18,22 +18,22 @@ export class MainGameComponent implements AfterViewInit {
   selectedCity: any = null;
 
   readonly INFECTIONS = [
-    { name: 'Virus A', color: 'blue' },
-    { name: 'Virus B', color: 'green' },
-    { name: 'Virus C', color: 'yellow' },
-    { name: 'Virus D', color: 'red' }
+    { name: 'Virus A', color: 'blue', num: 0 },
+    { name: 'Virus B', color: 'green', num: 1 },
+    { name: 'Virus C', color: 'yellow', num: 2 },
+    { name: 'Virus D', color: 'red', num: 3 }
   ];
 
   currentRound: number = 1;
   roundAction: string = '';
   gameOver = false;
-  actionsRemaining: number = 4; 
+  actionsRemaining: number = 4;
   config = {
     initialInfectedCities: 4,
     infectedCitiesPerRound: 2,
   };
 
-  vacunas: any[] = [];  
+  vacunas: any[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -42,20 +42,27 @@ export class MainGameComponent implements AfterViewInit {
     this.loadvacunas();
   }
 
+  infeccionAleatoria(): any {
+    return this.INFECTIONS[Math.floor(Math.random() * this.INFECTIONS.length)];
+  }
+
   loadCities(): void {
     this.http.get<any[]>('game/ciudades.json').subscribe({
       next: (data) => {
         this.cities = data.map(city => ({
           ...city,
           state: 'a salvo',
+          outbreaks: 0,
           population: city.poblacion,
+          infectionType: null, 
         }));
 
         for (let i = 0; i < this.config.initialInfectedCities; i++) {
           const randomCity = this.cities[Math.floor(Math.random() * this.cities.length)];
-          const randomInfection = this.infeccionAleatoria();
-          randomCity.state = 'nivel 1'; 
-          randomCity.infectionType = randomInfection; 
+          if (!randomCity.infectionType) { 
+            randomCity.state = 'nivel 1';
+            randomCity.infectionType = this.infeccionAleatoria();
+          }
         }
 
         this.renderCities();
@@ -65,21 +72,17 @@ export class MainGameComponent implements AfterViewInit {
         console.error('Error al cargar el archivo JSON', err);
       },
     });
-    this.conexiones();
   }
 
   loadvacunas(): void {
-    
     this.vacunas = [
-      { name: 'Vacuna Virus A', color: 'blue', progreso: 0, cantidad: 0 },
-      { name: 'Vacuna Virus B', color: 'green', progreso: 0, cantidad: 0 },
+      { name: 'Vacuna Virus A', color: 'blue', progreso: 0, cantidad: 0, type: 'A' },
+      { name: 'Vacuna Virus B', color: 'green', progreso: 0, cantidad: 0, type: 'B' },
+      { name: 'Vacuna Virus C', color: 'yellow', progreso: 0, cantidad: 0, type: 'C' },
+      { name: 'Vacuna Virus D', color: 'red', progreso: 0, cantidad: 0, type: 'D' },
     ];
   }
 
-  infeccionAleatoria(excludedInfection?: any): any {
-    const availableInfections = this.INFECTIONS.filter(infection => infection !== excludedInfection);
-    return availableInfections[Math.floor(Math.random() * availableInfections.length)];
-  }
 
   nextRound(): void {
     if (this.gameOver) return;
@@ -88,32 +91,34 @@ export class MainGameComponent implements AfterViewInit {
 
     this.roundAction = `Ronda ${this.currentRound}: La infección sigue propagándose.`;
 
-    const maxInfectionsPerRound = 1; 
+    let newlyInfected = [];
+    const maxInfectionsPerRound = 1;
 
     this.cities.forEach((city) => {
       if (city.state !== 'a salvo') {
-        
+
         if (city.state === 'nivel 1') {
-          city.state = 'nivel 2'; 
+          city.state = 'nivel 2';
         } else if (city.state === 'nivel 2') {
-          city.state = 'nivel 3'; 
+          city.state = 'nivel 3';
         }
 
-        
+
         if (city.state === 'nivel 1' || city.state === 'nivel 2' || city.state === 'nivel 3') {
-          let infectedThisRound = 0; 
+          let infectedThisRound = 0;
 
           city.neighbors.forEach((neighbor: any) => {
             if (infectedThisRound < maxInfectionsPerRound) {
               const neighborCity = this.cities.find(c => c.name === neighbor);
               if (neighborCity && neighborCity.state === 'a salvo') {
-                
-                if (Math.random() < 0.5) { 
-                  const newInfection = this.infeccionAleatoria(city.infectionType);
 
-                  neighborCity.state = 'nivel 1'; 
-                  neighborCity.infectionType = newInfection; 
+                if (Math.random() < 0.5) {
+                  const newInfection = this.infeccionAleatoria();
+
+                  neighborCity.state = 'nivel 1';
+                  neighborCity.infectionType = newInfection;
                   neighborCity.outbreaks += 1;
+                  newlyInfected.push(neighborCity);
                   infectedThisRound++;
                 }
               }
@@ -123,7 +128,7 @@ export class MainGameComponent implements AfterViewInit {
       }
     });
 
-    
+
     if (this.cities.every(city => city.state === 'nivel 3' || city.state === 'vacunada')) {
       this.gameOver = true;
       this.roundAction = '¡Perdiste! Todas las demás ciudades han sido infectadas';
@@ -144,11 +149,11 @@ export class MainGameComponent implements AfterViewInit {
       this.currentRound++;
     }
 
-    this.cambiarColor();
+    this.updateCityMarkers();
     this.conexiones();
   }
 
-  cambiarColor(): void {
+  updateCityMarkers(): void {
     this.cities.forEach(city => {
       const cityElement = this.cityElements.find(e => e.name === city.name);
       if (cityElement) {
@@ -245,46 +250,59 @@ export class MainGameComponent implements AfterViewInit {
       });
     }
   }
-  
+
+
   cureCity(city: any, vacuna: any): void {
-    if (vacuna.cantidad > 0 && city.state !== 'a salvo') {
-      
-      city.state = 'vacunada';
-      city.infectionRounds = 0;
-      city.infectionType = null;
-      vacuna.cantidad--; 
-      this.roundAction = `${city.name} ha sido vacunada con éxito.`;
+    if (vacuna.cantidad > 0 && city.state !== 'a salvo' && city.infectionType) {
+      const virusName = city.infectionType.name;
+      const vacunaName = vacuna.name.replace('Vacuna ', '');
+
+      if (virusName === vacunaName) {
+        city.state = 'vacunada';
+        city.infectionType = null;
+        vacuna.cantidad--;
+
+        
+        this.roundAction = `${city.name} ha sido vacunada con éxito. Vacunas restantes de ${vacuna.name}: ${vacuna.cantidad}`;
+      } else {
+        this.roundAction = `Error: ${vacuna.name} no es efectiva contra ${virusName}.`;
+      }
     } else {
       this.roundAction = `${city.name} no puede ser vacunada o no hay vacunas disponibles.`;
     }
+
+    
+    this.updateCityMarkers();
   }
+
+
 
   investigarVacuna(vacuna: any): void {
     if (this.actionsRemaining <= 0 || vacuna.progreso === 100) {
-      return; 
+      return;
     }
 
-    vacuna.progreso += 25; 
+    vacuna.progreso += 25;
     if (vacuna.progreso > 100) {
-      vacuna.progreso = 100; 
+      vacuna.progreso = 100;
     }
 
-    this.actionsRemaining--; 
+    this.actionsRemaining--;
     this.roundAction = `Investigando ${vacuna.name}... Progreso: ${vacuna.progreso}%`;
 
-    
+
     if (vacuna.progreso === 100) {
       this.roundAction = `${vacuna.name} está lista para ser fabricada.`;
     }
   }
 
   createvacuna(vacuna: any): void {
-    if (this.actionsRemaining <= 0) return; 
+    if (this.actionsRemaining <= 0) return;
 
-    
+
     if (vacuna.progreso === 100) {
-      vacuna.cantidad = (vacuna.cantidad || 0) + 1; 
-      this.actionsRemaining--; 
+      vacuna.cantidad = (vacuna.cantidad || 0) + 1;
+      this.actionsRemaining--;
       this.roundAction = `Creando ${vacuna.name}... Ahora tienes ${vacuna.cantidad} disponibles.`;
     } else {
       this.roundAction = `${vacuna.name} no está lista para fabricación.`;

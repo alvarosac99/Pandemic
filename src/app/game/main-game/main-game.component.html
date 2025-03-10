@@ -8,39 +8,56 @@
   <!-- Menú de acciones y vacunas -->
   <div class="menu-bar">
     <button (click)="nextRound()" [disabled]="gameOver">Siguiente Ronda</button>
+
+    <!-- Botones de investigación de vacunas -->
     <button *ngIf="vacunas.length > 0 && vacunas[0].progreso < 100" (click)="investigarVacuna(vacunas[0])">
       Investigar Vacuna A
     </button>
-    <button *ngIf="vacunas.length > 0 && vacunas[1].progreso < 100" (click)="investigarVacuna(vacunas[1])">
+    <button *ngIf="vacunas.length > 1 && vacunas[1].progreso < 100" (click)="investigarVacuna(vacunas[1])">
       Investigar Vacuna B
     </button>
+    <button *ngIf="vacunas.length > 2 && vacunas[2].progreso < 100" (click)="investigarVacuna(vacunas[2])">
+      Investigar Vacuna C
+    </button>
+    <button *ngIf="vacunas.length > 3 && vacunas[3].progreso < 100" (click)="investigarVacuna(vacunas[3])">
+      Investigar Vacuna D
+    </button>
+
+    <!-- Botones para crear vacunas -->
     <button *ngIf="vacunas.length > 0 && vacunas[0].progreso === 100" (click)="createvacuna(vacunas[0])">
       Crear Vacuna A
     </button>
-    <button *ngIf="vacunas.length > 0 && vacunas[1].progreso === 100" (click)="createvacuna(vacunas[1])">
+    <button *ngIf="vacunas.length > 1 && vacunas[1].progreso === 100" (click)="createvacuna(vacunas[1])">
       Crear Vacuna B
     </button>
-
-    <!-- Información de la ciudad seleccionada dentro del mismo div -->
-    <div class="city-info" *ngIf="selectedCity">
-      <h3>Información de la Ciudad: {{ selectedCity.name }}</h3>
-      <p><strong>Estado:</strong>
-        {{ selectedCity.rojo === 3 ? 'Rojo' : selectedCity.azul === 3 ? 'Azul' : selectedCity.amarillo === 3 ?
-        'Amarillo' : selectedCity.negro === 3 ? 'Negro' : 'A salvo' }}
-      </p>
-      <p><strong>Población:</strong> {{ selectedCity.poblacion }}</p>
-      <p><strong>Estado: </strong> {{ selectedCity.state }}</p>
-      <p><strong>Vecinos:</strong> {{ selectedCity.neighbors.join(', ') }}</p>
-      <button (click)="cureCity(selectedCity, vacunas[0])"
-        [disabled]="actionsRemaining <= 0 || vacunas[0]?.progreso !== 100 || vacunas[0]?.quantity <= 0">
-        Curar Ciudad con {{ vacunas[0]?.name }}
-      </button>
-    </div>
+    <button *ngIf="vacunas.length > 2 && vacunas[2].progreso === 100" (click)="createvacuna(vacunas[2])">
+      Crear Vacuna C
+    </button>
+    <button *ngIf="vacunas.length > 3 && vacunas[3].progreso === 100" (click)="createvacuna(vacunas[3])">
+      Crear Vacuna D
+    </button>
   </div>
 
-  <!-- Información de la ronda -->
-  <div class="round-info" *ngIf="roundAction">
-    <p>{{ roundAction }}</p>
-    <p>Acciones restantes: {{ actionsRemaining }}</p>
+
+  <!-- Información de la ciudad seleccionada dentro del mismo div -->
+  <div class="city-info" *ngIf="selectedCity">
+    <h3>Información de la Ciudad: {{ selectedCity.name }}</h3>
+    <p><strong>Estado:</strong>
+      {{ selectedCity.rojo === 3 ? 'Rojo' : selectedCity.azul === 3 ? 'Azul' : selectedCity.amarillo === 3 ?
+      'Amarillo' : selectedCity.negro === 3 ? 'Negro' : 'A salvo' }}
+    </p>
+    <p><strong>Población:</strong> {{ selectedCity.poblacion }}</p>
+    <p><strong>Estado:</strong> {{ selectedCity.state }} {{ selectedCity.infectionType?.name || '' }}</p>
+    <p><strong>Vecinos:</strong> {{ selectedCity.neighbors.join(', ') }}</p>
+    <button (click)="cureCity(selectedCity, vacunas[selectedCity.infectionType?.num])"
+      [disabled]="actionsRemaining <= 0 || vacunas[selectedCity.infectionType?.num]?.progreso !== 100 || vacunas[selectedCity.infectionType?.num]?.cantidad <= 0">
+      Curar Cidad con {{ vacunas[selectedCity.infectionType?.num]?.name }}
+    </button>
   </div>
+</div>
+
+<!-- Información de la ronda -->
+<div class="round-info" *ngIf="roundAction">
+  <p>{{ roundAction }}</p>
+  <p>Acciones restantes: {{ actionsRemaining }}</p>
 </div>
