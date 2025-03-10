@@ -50,7 +50,8 @@
     <p><strong>Estado:</strong> {{ selectedCity.state }} {{ selectedCity.infectionType?.name || '' }}</p>
     <p><strong>Vecinos:</strong> {{ selectedCity.neighbors.join(', ') }}</p>
     <button *ngIf="selectedCity.state !== 'a salvo' && selectedCity.state !== 'vacunada'"
-      (click)="cureCity(selectedCity, vacunas[selectedCity.infectionType?.num])" class="btn btn-primary">
+      (click)="cureCity(selectedCity, vacunas[selectedCity.infectionType?.num])" class="btn btn-primary"
+      style="background-color: rgb(75, 204, 81);">
       Curar {{ selectedCity.name }} con {{ vacunas[selectedCity.infectionType?.num]?.name }}
     </button>
   </div>
