@@ -49,9 +49,9 @@
     <p><strong>Población:</strong> {{ selectedCity.poblacion }}</p>
     <p><strong>Estado:</strong> {{ selectedCity.state }} {{ selectedCity.infectionType?.name || '' }}</p>
     <p><strong>Vecinos:</strong> {{ selectedCity.neighbors.join(', ') }}</p>
-    <button (click)="cureCity(selectedCity, vacunas[selectedCity.infectionType?.num])"
-      [disabled]="actionsRemaining <= 0 || vacunas[selectedCity.infectionType?.num]?.progreso !== 100 || vacunas[selectedCity.infectionType?.num]?.cantidad <= 0">
-      Curar Cidad con {{ vacunas[selectedCity.infectionType?.num]?.name }}
+    <button *ngIf="selectedCity.state !== 'a salvo' && selectedCity.state !== 'vacunada'"
+      (click)="cureCity(selectedCity, vacunas[selectedCity.infectionType?.num])" class="btn btn-primary">
+      Curar {{ selectedCity.name }} con {{ vacunas[selectedCity.infectionType?.num]?.name }}
     </button>
   </div>
 </div>

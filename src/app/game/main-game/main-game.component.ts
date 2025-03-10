@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-main-game',
@@ -8,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./main-game.component.css'],
 })
 export class MainGameComponent implements AfterViewInit {
+  //Se añade los componentes del html para ir modificandolos con el transcurso del juego
   @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
   @ViewChild('mapImage', { static: false }) mapImage!: ElementRef;
   @ViewChild('canvasOverlay', { static: false }) canvasOverlay!: ElementRef;
@@ -17,6 +19,7 @@ export class MainGameComponent implements AfterViewInit {
   cityElements: any[] = [];
   selectedCity: any = null;
 
+  //Constantes para nombrar las infecciones, el num es para mapearlo con su correspondiente vacuna
   readonly INFECTIONS = [
     { name: 'Virus A', color: 'blue', num: 0 },
     { name: 'Virus B', color: 'green', num: 1 },
@@ -29,7 +32,7 @@ export class MainGameComponent implements AfterViewInit {
   gameOver = false;
   actionsRemaining: number = 4;
   config = {
-    initialInfectedCities: 4,
+    ciudadesPochasInicio: 4,
     infectedCitiesPerRound: 2,
   };
 
@@ -47,19 +50,19 @@ export class MainGameComponent implements AfterViewInit {
   }
 
   loadCities(): void {
-    this.http.get<any[]>('game/ciudades.json').subscribe({
+    this.http.get<any[]>('game/ciudades.json').subscribe({ //Recorre el json
       next: (data) => {
         this.cities = data.map(city => ({
           ...city,
           state: 'a salvo',
           outbreaks: 0,
           population: city.poblacion,
-          infectionType: null, 
+          infectionType: null, //asigna valores extra para el funcionamiento del juego
         }));
 
-        for (let i = 0; i < this.config.initialInfectedCities; i++) {
+        for (let i = 0; i < this.config.ciudadesPochasInicio; i++) { //por cada ciudad de inicio le aplica una infeccion aleatoria
           const randomCity = this.cities[Math.floor(Math.random() * this.cities.length)];
-          if (!randomCity.infectionType) { 
+          if (!randomCity.infectionType) {
             randomCity.state = 'nivel 1';
             randomCity.infectionType = this.infeccionAleatoria();
           }
@@ -74,7 +77,7 @@ export class MainGameComponent implements AfterViewInit {
     });
   }
 
-  loadvacunas(): void {
+  loadvacunas(): void { //se cargan las vacunas a la memoria como un array
     this.vacunas = [
       { name: 'Vacuna Virus A', color: 'blue', progreso: 0, cantidad: 0, type: 'A' },
       { name: 'Vacuna Virus B', color: 'green', progreso: 0, cantidad: 0, type: 'B' },
@@ -84,17 +87,16 @@ export class MainGameComponent implements AfterViewInit {
   }
 
 
-  nextRound(): void {
-    if (this.gameOver) return;
+  nextRound(): void { // Pasamos ronda
+    if (this.gameOver) return; // si hemos perdido no hace nada
 
     this.actionsRemaining = 4;
 
     this.roundAction = `Ronda ${this.currentRound}: La infección sigue propagándose.`;
 
-    let newlyInfected = [];
     const maxInfectionsPerRound = 1;
 
-    this.cities.forEach((city) => {
+    this.cities.forEach((city) => { //por cada ciudad comienza a aumentar el nivel de infeccion
       if (city.state !== 'a salvo') {
 
         if (city.state === 'nivel 1') {
@@ -103,13 +105,13 @@ export class MainGameComponent implements AfterViewInit {
           city.state = 'nivel 3';
         }
 
-
+        //por cada ciudad que ya esté infectada comienza a propagar
         if (city.state === 'nivel 1' || city.state === 'nivel 2' || city.state === 'nivel 3') {
           let infectedThisRound = 0;
 
-          city.neighbors.forEach((neighbor: any) => {
+          city.neighbors.forEach((neighbor: any) => { //Por cada vecino de esa ciudad
             if (infectedThisRound < maxInfectionsPerRound) {
-              const neighborCity = this.cities.find(c => c.name === neighbor);
+              const neighborCity = this.cities.find(c => c.name === neighbor); //recorre el array y coge uno para infectarla
               if (neighborCity && neighborCity.state === 'a salvo') {
 
                 if (Math.random() < 0.5) {
@@ -118,7 +120,6 @@ export class MainGameComponent implements AfterViewInit {
                   neighborCity.state = 'nivel 1';
                   neighborCity.infectionType = newInfection;
                   neighborCity.outbreaks += 1;
-                  newlyInfected.push(neighborCity);
                   infectedThisRound++;
                 }
               }
@@ -132,17 +133,20 @@ export class MainGameComponent implements AfterViewInit {
     if (this.cities.every(city => city.state === 'nivel 3' || city.state === 'vacunada')) {
       this.gameOver = true;
       this.roundAction = '¡Perdiste! Todas las demás ciudades han sido infectadas';
+      this.perdiste(this.roundAction)
     }
 
     if (this.cities.every(city => city.state === 'nivel 3')) {
       this.gameOver = true;
       this.roundAction = '¡Perdiste! Todas las ciudades han sido infectadas.';
+      this.perdiste(this.roundAction)
     }
 
 
     if (this.cities.every(city => city.population <= 0)) {
       this.gameOver = true;
       this.roundAction = '¡Perdiste! Todas las ciudades han perdido su población.';
+      this.perdiste(this.roundAction)
     }
 
     if (!this.gameOver) {
@@ -151,6 +155,17 @@ export class MainGameComponent implements AfterViewInit {
 
     this.updateCityMarkers();
     this.conexiones();
+  }
+
+  perdiste(mensaje: String){
+    Swal.fire({
+          backdrop: "true",
+          position: "center",
+          icon: "error",
+          title: mensaje,
+          showConfirmButton: false,
+          timer: 100000000
+        });
   }
 
   updateCityMarkers(): void {
@@ -262,7 +277,7 @@ export class MainGameComponent implements AfterViewInit {
         city.infectionType = null;
         vacuna.cantidad--;
 
-        
+
         this.roundAction = `${city.name} ha sido vacunada con éxito. Vacunas restantes de ${vacuna.name}: ${vacuna.cantidad}`;
       } else {
         this.roundAction = `Error: ${vacuna.name} no es efectiva contra ${virusName}.`;
@@ -271,7 +286,7 @@ export class MainGameComponent implements AfterViewInit {
       this.roundAction = `${city.name} no puede ser vacunada o no hay vacunas disponibles.`;
     }
 
-    
+
     this.updateCityMarkers();
   }
 
