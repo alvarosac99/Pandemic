@@ -32,6 +32,12 @@
   z-index: 100;
 }
 
+button {
+  color: white;
+  background-color: rgb(53, 150, 196);
+  border: 3px solid white;
+}
+
 .map-container {
   position: relative;
   margin: auto;
