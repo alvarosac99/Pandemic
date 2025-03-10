@@ -7,7 +7,7 @@
 
   <!-- Menú de acciones y vacunas -->
   <div class="menu-bar">
-    <button (click)="nextRound()" [disabled]="gameOver">Siguiente Ronda</button>
+    <button (click)="nextRound()" [disabled]="gameOver" style="background-color: white; color: black;">Siguiente Ronda</button>
 
     <!-- Botones de investigación de vacunas -->
     <button *ngIf="vacunas.length > 0 && vacunas[0].progreso < 100" (click)="investigarVacuna(vacunas[0])">
